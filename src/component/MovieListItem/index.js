@@ -33,7 +33,7 @@ export default class MovieListItem extends Component {
         return (
             <div className='col-sm-4 col-md-2 col-6 mb-4'>
                 <div className = {classes.movieListItem}>
-                    <Link to = {{pathname: this.slug(movie.id, movie.title)}} style={{ textDecoration: 'none' }}>
+                    <Link to = {this.slug(movie.id, movie.title)} style={{textDecoration: 'none'}}>
                         {
                             this.props.isOwned?
                             <div className={`${classes.label} ${classes.owned}`}>

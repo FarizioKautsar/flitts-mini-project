@@ -99,7 +99,7 @@ export default class MovieDetail extends Component {
                                 this.state.inCart?
                                 'Hapus dari Keranjang'
                                 : 
-                                'Beli Film' 
+                                'Tambah ke Keranjang' 
                             }
                         </Button>
                     </div>

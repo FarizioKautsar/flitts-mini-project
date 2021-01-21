@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import {APIConfig} from '../../api/APIConfig'
 import MovieListItem from '../../component/MovieListItem';
 import Loader from '../../component/Loader';
 
@@ -7,25 +6,11 @@ export default class MovieList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            movies: [],
-            isLoading: true,
+            movies: this.props.movies,
+            isLoading: false,
             searchMovie: "",
         }
         this.calculatePrice = this.calculatePrice.bind(this)
-    }
-
-    async loadMovies() {
-        try {
-            const {data} = await APIConfig.get('/discover/movie')
-            this.setState({isLoading: false, movies: data.results})
-        } catch (error) {
-            alert("Terjadi kesalahan saat memuat film.")
-            console.log(error)
-        }
-    }
-
-    componentDidMount() {
-        this.loadMovies()
     }
 
     calculatePrice(rating) {
@@ -43,18 +28,18 @@ export default class MovieList extends Component {
     render() {
         return (
             <div>
-                <h3>Showing Now in Indonesia</h3>
+                <h2>{this.props.children}</h2>
                 {
                     this.state.isLoading && <Loader/>
                 }
                 <div className="row my-5">
                     {
-                        this.state.movies.map((movie) => (
+                        this.props.movies.map((movie) => (
                             <MovieListItem
                                 key = {movie.id}
                                 movie = {movie}
                                 price = {this.calculatePrice(movie.vote_average)}
-                                inCart = {this.props.cart.some(m => m.id === movie.id)? true : false}
+                                inCart = {this.props.cart.some(c => c.movie.id === movie.id)? true : false}
                                 isOwned = {this.props.owned.some(m => m.id === movie.id)? true : false}
                                 addToCart = {this.props.addToCart}
                                 removeFromCart = {this.props.removeFromCart}

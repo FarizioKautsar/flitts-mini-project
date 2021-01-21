@@ -2,13 +2,15 @@ import React, { Component } from 'react'
 import Button from '../../component/Button';
 import CartItem from '../../component/CartItem'
 import { Link } from 'react-router-dom';
+import classes from './Cart.module.css';
 
 export default class Cart extends Component {
     constructor(props) {
         super(props);
         this.state = {
             cart: this.props.cart,
-            isEmpty: this.props.cart.length==0? true : false,
+            subtotal: this.props.subtotal,
+            isEmpty: this.props.cart.length === 0? true : false,
             checkoutSuccess: false,
         }
         this.handleCheckout = this.handleCheckout.bind(this)
@@ -24,9 +26,9 @@ export default class Cart extends Component {
             <div>
                 <h2>Your Cart</h2>
                 {
-                    this.state.cart.map((movie) => (
+                    this.state.cart.map((cartItem) => (
                         <div>
-                            <CartItem movie = {movie}/>
+                            <CartItem movie = {cartItem.movie} price = {cartItem.price}/>
                         </div>
                     ))
                 }
@@ -49,9 +51,16 @@ export default class Cart extends Component {
                             </Button>
                         </Link>
                     </div> :  
-                    <Button variant = 'green' className = 'ms-auto' onClick = {this.handleCheckout}>
-                        Check Out
-                    </Button>
+                    <div className = 'row w-25 ms-auto'>
+                        <div className='col d-flex'>
+                            <p className={classes.subtotal + ' justify-content-center align-self-center'}>Subtotal <b>{this.state.subtotal}</b></p>
+                        </div>
+                        <div className = 'col'>
+                            <Button variant = 'green' className = 'ms-auto' onClick = {this.handleCheckout}>
+                                Check Out
+                            </Button>
+                        </div>
+                    </div>
                 }
             </div>
         )

@@ -33,13 +33,20 @@ export default class Navbar extends Component {
                             </li>
                         </ul>
                         <ul className="navbar-nav ms-auto">
-                            <li className="nav-item me-3">
-                                <p className="align-middle">Saldo Anda: <b>Rp{this.props.balance}</b></p>
+                            <li className="nav-item align-middle">
+                                <p className='nav-link'>Saldo Anda <b>Rp{this.props.balance}</b></p>
                             </li>
                             <li className="nav-item">
                                 <Link to="/cart" className="nav-link">
                                     <Button className="my-auto" variant="blue">
                                         <i className="fas fa-shopping-cart"></i>
+                                    </Button>
+                                </Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link to="/your-movies" className="nav-link">
+                                    <Button className="my-auto" variant="white">
+                                        Film Saya
                                     </Button>
                                 </Link>
                             </li>
