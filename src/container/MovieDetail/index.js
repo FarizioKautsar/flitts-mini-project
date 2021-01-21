@@ -1,57 +1,119 @@
-import React, { Component } from 'react'
+ import React, { Component } from 'react'
 import classes from './MovieDetail.module.css'
-import Backdrop from '../../component/Backdrop'
-import { useParams } from 'react-router-dom';
+import MovieListClasses from '../../component/MovieListItem/MovieListItem.module.css'
 import { APIConfig } from '../../api/APIConfig';
+import Cast from '../../component/Cast'
+import Button from '../../component/Button'
 
 export default class MovieDetail extends Component {
     constructor(props) {
         super(props);
         this.state = {
             isLoading: true,
+            isLoadingCast: true,
             movie: {},
+            price: 0,
+            casts: [],
+            inCart: false,
+            isOwned: false,
         }
-        console.log(this.props.match.params.slug)
+        this.handleAddToCart = this.handleAddToCart.bind(this)
+        this.handleRemoveFromCart = this.handleRemoveFromCart.bind(this)
+        this.calculatePrice = this.calculatePrice.bind(this)
+    }
+    
+    calculatePrice(rating) {
+        console.log(rating)
+        if (rating >= 8) {
+            return 21250
+        } else if (rating >= 6 && rating < 8){
+            return 16350
+        } else if (rating >= 3 && rating < 6){
+            return 8250
+        } else {
+            return 3500
+        }
     }
 
-    
     async loadMovie(id) {
-        // this.setState({loading: true})
         try {
             const {data} = await APIConfig.get('/movie/' + id)
-            console.log(data)
             this.setState({isLoading: false, movie: data})
+            // const price = this.calculatePrice(this.state.movie.vote_average)
+            this.setState({
+                price: this.calculatePrice(this.state.movie.vote_average),
+                inCart: this.props.cart.some(m => m.id === this.state.movie.id)? true : false,
+                isOwned: this.props.owned.some(m => m.id === this.state.movie.id)? true : false,
+            })
+            this.loadCredits(id)
         } catch (error) {
             alert("Terjadi kesalahan saat memuat film.")
             console.log(error)
         }
     }
 
+    async loadCredits(id) {
+        try {
+            const {data} = await APIConfig.get('/movie/' + id + '/credits')
+            this.setState({isLoadingCast: false, casts: data.cast})
+        } catch (error) {
+            alert("Terjadi kesalahan saat memuat credit film.")
+            console.log(error)
+        }
+    }
+
     componentDidMount() {
-        let slug = this.props.match.params.slug
-        let movieId = slug.substr(0, slug.indexOf('-'))
+        const slug = this.props.match.params.slug
+        const movieId = slug.substr(0, slug.indexOf('-'))
         this.loadMovie(movieId)
     }
 
+    handleAddToCart(e) {
+        this.setState({inCart: true})
+        this.props.addToCart(this.state.movie, this.state.price)
+    }
+
+    handleRemoveFromCart(e) {
+        this.setState({inCart: false})
+        this.props.removeFromCart(this.state.movie, this.state.price)
+    }
+
     render() {
-        // alert("movie detail")
         const movie = this.state.movie
-        console.log(movie)
+        const casts = this.state.casts
         return (
             <div className='row'>
                 <div className={classes.poster + ' col'}>
-                    <img src = {'https://www.themoviedb.org/t/p/w600_and_h900_bestv2' + movie.poster_path} className='w-100'></img>
-                    <div className={classes.movieDesc}>
-                        <p className={classes.title}>{movie.title}</p>
-                        <p className={classes.year}>{movie.year}</p>
-                        <p className={classes.price}>Rp{movie.price}</p>
+                    <img src = {'https://www.themoviedb.org/t/p/w600_and_h900_bestv2' + movie.poster_path} alt={movie.title} className='w-100'></img>
+                    <div className={MovieListClasses.movieDesc}>
+                        <p className={MovieListClasses.title}>{movie.title}</p>
+                        <p className={MovieListClasses.year}>{movie.release_date}</p>
+                        <p className={MovieListClasses.year}>{movie.runtime + ' minutes'}</p>
+                        <p className={MovieListClasses.price}>Rp{this.state.price}</p>
+                        <Button 
+                            variant={this.props.inCart? 'red' : 'green'} 
+                            className='w-100 mt-3'
+                            onClick = {this.props.inCart? this.handleRemoveFromCart : this.handleAddToCart}>
+                            {
+                                this.state.inCart?
+                                'Hapus dari Keranjang'
+                                : 
+                                'Beli Film' 
+                            }
+                        </Button>
                     </div>
                 </div>
-                <div className={classes.movieDetail + ' col-8'}>
+                <div className={classes.movieDetail + ' col-9'}>
                     <h4>Overview</h4>
                     <p className={classes.year}>{movie.overview}</p>
                     <h4>Casts</h4>
-                    <p className={classes.year}>{movie.overview}</p>
+                    <div className='row'>
+                        {
+                            casts.map((cast) => (
+                                <Cast name={cast.name} profile_path={cast.profile_path}></Cast>
+                            ))
+                        }
+                    </div>
                 </div>
             </div>
         )

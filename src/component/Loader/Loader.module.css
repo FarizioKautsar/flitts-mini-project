@@ -1,0 +1,25 @@
+.background {
+    height: 100%;
+    width: 100%;
+    display: grid;
+    place-items: center;
+}
+
+.loader {
+    border: 16px solid rgba(0, 0, 0, 0);
+    border-top: 10px solid #2B5C89;
+    border-bottom: 10px solid #2B5C89;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spincw 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    /* position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); */
+}
+
+@keyframes spincw {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

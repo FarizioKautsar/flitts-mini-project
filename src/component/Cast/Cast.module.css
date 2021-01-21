@@ -1,0 +1,21 @@
+.cast {
+    border-radius: 15px;
+    background: #FFFFFF;
+    color: #2F2F2F;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    height: 100%;
+}
+
+.noPicture {
+    height: 100%;
+    padding-top: 66.666666%;
+}
+
+.castDesc {
+    padding: 15px;
+}
+
+.castDesc p {
+    margin: 0;
+}

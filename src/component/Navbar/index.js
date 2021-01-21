@@ -1,10 +1,7 @@
 import React, { Component } from 'react'
 import Button from '../Button'
 import { 
-    BrowserRouter as Router, 
-    Route, 
     Link, 
-    Switch 
 } from 'react-router-dom'; 
 
 export default class Navbar extends Component {
@@ -37,12 +34,12 @@ export default class Navbar extends Component {
                         </ul>
                         <ul className="navbar-nav ms-auto">
                             <li className="nav-item me-3">
-                                <p className="align-middle">Saldo Anda: <b>{this.props.balance}</b></p>
+                                <p className="align-middle">Saldo Anda: <b>Rp{this.props.balance}</b></p>
                             </li>
                             <li className="nav-item">
                                 <Link to="/cart" className="nav-link">
                                     <Button className="my-auto" variant="blue">
-                                        Lihat Keranjang
+                                        <i className="fas fa-shopping-cart"></i>
                                     </Button>
                                 </Link>
                             </li>
