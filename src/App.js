@@ -69,10 +69,7 @@ export default class App extends Component {
   checkout() {
     const movies = this.state.cart.map(c => c.movie)
     const amountPaid = this.state.subtotal + this.state.amountPaid
-    const balance = this.state.balance - amountPaid
-    if (balance < 0) {
-
-    }
+    const balance = this.state.balance - this.state.subtotal
     this.setState({
       owned: this.state.owned.concat(movies), 
       cart: [], 
@@ -81,7 +78,7 @@ export default class App extends Component {
       balance: balance,
     })
     localStorage.setItem('owned', JSON.stringify(movies))
-    localStorage.setItem('cart', [])
+    localStorage.setItem('cart', JSON.stringify([]))
     localStorage.setItem('amountPaid', amountPaid)
     localStorage.setItem('subtotal', 0)
   }

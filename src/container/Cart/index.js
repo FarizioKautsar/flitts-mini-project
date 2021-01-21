@@ -43,7 +43,7 @@ export default class Cart extends Component {
                             this.state.checkoutSuccess? 
                             <div>
                                 <h4 className='mt-3'>Checkout berhasil!</h4> 
-                                <Link to = '/'>
+                                <Link to = '/your-movies'>
                                     <Button variant = 'blue'>
                                         Lihat Film Saya
                                     </Button>
