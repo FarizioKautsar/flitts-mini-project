@@ -11,7 +11,6 @@
     transform-origin: top left;
     border-radius: 30px;
     overflow: hidden;
-    color: #2F2F2F;
 }
 
 .poster {
@@ -34,6 +33,11 @@
 
 .poster p {
     margin: 0;
+    /* color: #2F2F2F; */
+}
+
+.movieDetail p {
+    color: #2F2F2F;
 }
 
 .title {
@@ -68,5 +72,5 @@ h4 {
 }
 
 .movieDetail {
-    padding: 30px;
+    padding-left: 30px;
 }

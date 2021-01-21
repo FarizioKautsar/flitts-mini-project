@@ -7,6 +7,7 @@ export default class MovieListItem extends Component {
     constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this)
+        this.slug = this.slug.bind(this)
     }
 
     async loadImage(link) {
@@ -27,7 +28,7 @@ export default class MovieListItem extends Component {
         return (
             <div className='col-sm-4 col-md-2 col-6 mb-4'>
                 <Link to = {this.slug(this.props.id, this.props.title)} style={{ textDecoration: 'none' }}>
-                    <div className = {classes.movieListItem} value = {this.props.id} onClick={this.props.onClick}>
+                    <div className = {classes.movieListItem}>
                         <img src = {this.props.poster_link} className='w-100'></img>
                         <div className = {classes.movieDesc}> 
                             {/* <div className={classes.fade}></div> */}

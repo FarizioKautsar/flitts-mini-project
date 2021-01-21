@@ -7,7 +7,7 @@ import {
   BrowserRouter as Router, 
   Route, 
   Switch,
-  useParams
+  // useParams
 } from 'react-router-dom'; 
 import MovieDetail from './container/MovieDetail';
 
@@ -25,7 +25,7 @@ export default class App extends Component {
   }
 
   render() {
-    let {id} = useParams()
+    // let {id} = useParams()
     return (
       <Router>
         <Navbar balance = {this.state.balance}/>
@@ -34,12 +34,12 @@ export default class App extends Component {
             <Route exact path='/'>
               <MovieList buyMovie = {this.buyMovie}/>
             </Route> 
-            <Route path='/cart/' >
+            <Route exact path='/cart/' >
               <Button variant="blue">This is the cart</Button>
             </Route>
-            <Route path='/:id' >
-              {/* <MovieDetail/> */}
-              <Button variant="blue">{id}</Button>
+            <Route exact path='/:slug' render={(props) => <MovieDetail {...props}/>}>
+              {/* <MovieDetail {...props}/> */}
+              {/* <Button variant="blue">Movie Dettail</Button> */}
             </Route> 
           </Switch>           
         </div>

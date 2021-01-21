@@ -40,7 +40,7 @@ export default class Navbar extends Component {
                                 <p className="align-middle">Saldo Anda: <b>{this.props.balance}</b></p>
                             </li>
                             <li className="nav-item">
-                                <Link to="cart" className="nav-link">
+                                <Link to="/cart" className="nav-link">
                                     <Button className="my-auto" variant="blue">
                                         Lihat Keranjang
                                     </Button>
