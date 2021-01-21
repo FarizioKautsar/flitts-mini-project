@@ -37,11 +37,11 @@ export default class MovieListItem extends Component {
                         {
                             this.props.isOwned?
                             <div className={`${classes.label} ${classes.owned}`}>
-                                Owned
+                                Di Koleksi
                             </div>
                             : this.props.inCart?
                             <div className={`${classes.label} ${classes.inCart}`}>
-                                In Cart
+                                Di Keranjang
                             </div> : null
                         }
                         <img src = {'https://www.themoviedb.org/t/p/w600_and_h900_bestv2' + movie.poster_path} alt={movie.title} className='w-100'></img>

@@ -1,9 +1,10 @@
- import React, { Component } from 'react'
+import React, { Component } from 'react'
 import classes from './MovieDetail.module.css'
 import MovieListClasses from '../../component/MovieListItem/MovieListItem.module.css'
 import { APIConfig } from '../../api/APIConfig';
 import Cast from '../../component/Cast'
 import Button from '../../component/Button'
+import {Link} from 'react-router-dom'
 
 export default class MovieDetail extends Component {
     constructor(props) {
@@ -39,12 +40,12 @@ export default class MovieDetail extends Component {
         try {
             const {data} = await APIConfig.get('/movie/' + id)
             this.setState({isLoading: false, movie: data})
-            // const price = this.calculatePrice(this.state.movie.vote_average)
             this.setState({
                 price: this.calculatePrice(this.state.movie.vote_average),
-                inCart: this.props.cart.some(m => m.id === this.state.movie.id)? true : false,
+                inCart: this.props.cart.some(c => c.movie.id === this.state.movie.id)? true : false,
                 isOwned: this.props.owned.some(m => m.id === this.state.movie.id)? true : false,
             })
+            console.log(this.props.cart)
             this.loadCredits(id)
         } catch (error) {
             alert("Terjadi kesalahan saat memuat film.")
@@ -91,17 +92,24 @@ export default class MovieDetail extends Component {
                         <p className={MovieListClasses.year}>{movie.release_date}</p>
                         <p className={MovieListClasses.year}>{movie.runtime + ' minutes'}</p>
                         <p className={MovieListClasses.price}>Rp{this.state.price}</p>
-                        <Button 
-                            variant={this.state.inCart? 'red' : 'green'} 
-                            className='w-100 mt-3'
-                            onClick = {this.state.inCart? this.handleRemoveFromCart : this.handleAddToCart}>
-                            {
-                                this.state.inCart?
-                                'Hapus dari Keranjang'
-                                : 
-                                'Tambah ke Keranjang' 
-                            }
-                        </Button>
+                        {
+                            !this.state.isOwned?
+                            <Button 
+                                variant={this.state.inCart? 'red' : 'green'} 
+                                className='w-100 mt-3'
+                                onClick = {this.state.inCart? this.handleRemoveFromCart : this.handleAddToCart}>
+                                {
+                                    this.state.inCart?
+                                    'Hapus dari Keranjang'
+                                    : 
+                                    'Tambah ke Keranjang' 
+                                }
+                            </Button>
+                            : 
+                            <Button variant = 'blue' className='w-100 mt-3'>
+                                Tonton
+                            </Button>
+                        }
                     </div>
                 </div>
                 <div className={classes.movieDetail + ' col-9'}>

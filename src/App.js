@@ -43,7 +43,6 @@ export default class App extends Component {
       cartItem.price = price
       const newCart = this.state.cart.concat(cartItem)
       const subtotal = this.state.subtotal + price
-      console.log(subtotal)
       localStorage.setItem('subtotal', subtotal)
       localStorage.setItem('cart', JSON.stringify(newCart))
       this.setState({
@@ -67,7 +66,7 @@ export default class App extends Component {
   }
 
   checkout() {
-    const movies = this.state.cart.map(c => c.movie)
+    const movies = this.state.owned.concat(this.state.cart.map(c => c.movie))
     const amountPaid = this.state.subtotal + this.state.amountPaid
     const balance = this.state.balance - this.state.subtotal
     this.setState({
@@ -99,7 +98,6 @@ export default class App extends Component {
   }
 
   async loadMore() {
-    console.log('load more')
     try {
       const {data} = await APIConfig.get('/discover/movie',
       {
