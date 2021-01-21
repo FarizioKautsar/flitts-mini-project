@@ -74,6 +74,7 @@ export default class MovieDetail extends Component {
     }
 
     handleRemoveFromCart(e) {
+        console.log('movie detail remove from cart')
         this.setState({inCart: false})
         this.props.removeFromCart(this.state.movie, this.state.price)
     }
@@ -91,9 +92,9 @@ export default class MovieDetail extends Component {
                         <p className={MovieListClasses.year}>{movie.runtime + ' minutes'}</p>
                         <p className={MovieListClasses.price}>Rp{this.state.price}</p>
                         <Button 
-                            variant={this.props.inCart? 'red' : 'green'} 
+                            variant={this.state.inCart? 'red' : 'green'} 
                             className='w-100 mt-3'
-                            onClick = {this.props.inCart? this.handleRemoveFromCart : this.handleAddToCart}>
+                            onClick = {this.state.inCart? this.handleRemoveFromCart : this.handleAddToCart}>
                             {
                                 this.state.inCart?
                                 'Hapus dari Keranjang'

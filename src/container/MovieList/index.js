@@ -26,12 +26,9 @@ export default class MovieList extends Component {
 
     componentDidMount() {
         this.loadMovies()
-        console.log("MovieList mount")
-        console.log(this.props.cart)
     }
 
     calculatePrice(rating) {
-        console.log(rating)
         if (rating >= 8) {
             return 21250
         } else if (rating >= 6 && rating < 8){
@@ -58,6 +55,7 @@ export default class MovieList extends Component {
                                 movie = {movie}
                                 price = {this.calculatePrice(movie.vote_average)}
                                 inCart = {this.props.cart.some(m => m.id === movie.id)? true : false}
+                                isOwned = {this.props.owned.some(m => m.id === movie.id)? true : false}
                                 addToCart = {this.props.addToCart}
                                 removeFromCart = {this.props.removeFromCart}
                             />
