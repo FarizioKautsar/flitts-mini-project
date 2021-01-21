@@ -7,12 +7,13 @@
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
     height: max-content;
     padding: 15px;
+    position: relative;
 }
 
-.cartItem .col-2 {
-    padding-left: 0;
+/* .cartItem .col-1 {
+    padding-left: 15px;
     padding-right: 0;
-}
+} */
 
 .cartItem img {
     border-radius: 15px;
@@ -22,4 +23,10 @@
 
 .cartItem p{
     margin: 0;
+}
+
+.removeButton {
+    position: absolute;
+    top: 15px;
+    right: 15px;
 }

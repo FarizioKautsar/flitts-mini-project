@@ -22,16 +22,11 @@ export default class Navbar extends Component {
         return (
             <nav className="navbar navbar-expand-sm">
                 <div className="container-fluid">
-                    <a className="navbar-brand" href="/">Stream<b>Flix</b></a>
+                    <Link to = '/' className="navbar-brand" href="/">Stream<b>Flix</b></Link>
                     <button className="navbar-toggler" type="button" onClick={this.toggleMenu}>
                         <span className="navbar-toggler-icon hamburger"></span>
                     </button>
                     <div className={"collapse navbar-collapse " + show}>
-                        <ul className="navbar-nav">
-                            <li className="nav-item">
-                                <Link to="/" className="nav-link">Film Indonesia</Link>
-                            </li>
-                        </ul>
                         <ul className="navbar-nav ms-auto">
                             <li className="nav-item align-middle">
                                 <p className='nav-link'>Saldo Anda <b>Rp{this.props.balance}</b></p>

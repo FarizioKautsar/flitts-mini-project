@@ -70,6 +70,9 @@ export default class App extends Component {
     const movies = this.state.cart.map(c => c.movie)
     const amountPaid = this.state.subtotal + this.state.amountPaid
     const balance = this.state.balance - amountPaid
+    if (balance < 0) {
+
+    }
     this.setState({
       owned: this.state.owned.concat(movies), 
       cart: [], 
@@ -156,6 +159,8 @@ export default class App extends Component {
                 cart = {this.state.cart}
                 checkout = {this.checkout}
                 subtotal = {this.state.subtotal}
+                balance = {this.state.balance}
+                removeFromCart = {this.removeFromCart}
               ></Cart>
             </Route>
             <Route exact path='/your-movies'>

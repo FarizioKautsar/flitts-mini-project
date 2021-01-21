@@ -8,9 +8,7 @@ export default class Cart extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            cart: this.props.cart,
-            subtotal: this.props.subtotal,
-            isEmpty: this.props.cart.length === 0? true : false,
+            insufficient: false,
             checkoutSuccess: false,
         }
         this.handleCheckout = this.handleCheckout.bind(this)
@@ -25,43 +23,62 @@ export default class Cart extends Component {
         return (
             <div>
                 <h2>Your Cart</h2>
-                {
-                    this.state.cart.map((cartItem) => (
-                        <div>
-                            <CartItem movie = {cartItem.movie} price = {cartItem.price}/>
+                <div className='row'>
+                    {
+                        this.props.cart.length?
+                        <div className='col-8'>
+                            {
+                                this.props.cart.map((cartItem) => (
+                                    <CartItem 
+                                        movie = {cartItem.movie} 
+                                        price = {cartItem.price}
+                                        removeFromCart = {this.props.removeFromCart}/>
+                                        ))
+                                    }
                         </div>
-                    ))
-                }
-                {
-                    this.state.checkoutSuccess? 
-                    <div>
-                        <h4 className='mt-3'>Checkout berhasil!</h4> 
-                        <Link to = '/'>
-                            <Button variant = 'blue'>
-                                Lihat Film Saya
-                            </Button>
-                        </Link>
+                        : null
+                    }
+                    <div className='col'>
+                        {
+                            this.state.checkoutSuccess? 
+                            <div>
+                                <h4 className='mt-3'>Checkout berhasil!</h4> 
+                                <Link to = '/'>
+                                    <Button variant = 'blue'>
+                                        Lihat Film Saya
+                                    </Button>
+                                </Link>
+                            </div>
+                            : this.props.cart.length === 0?  
+                            <div>
+                                <h4 className='mt-3'>Sepi ya...</h4> 
+                                <Link to = '/'>
+                                    <Button variant = 'blue'>
+                                        Lihat Film yang Tersedia
+                                    </Button>
+                                </Link>
+                            </div> :  
+                            <div className = 'row  ms-auto'>
+                                <div className='col d-flex'>
+                                    <p className={classes.subtotal + ' justify-content-center align-self-center'}>
+                                        Subtotal <b>Rp{this.props.subtotal}</b></p>
+                                </div>
+                                <div className = 'col'>
+                                    {
+                                        (this.props.balance - this.props.subtotal) < 0? 
+                                        <Button variant = 'red' className = 'ms-auto'>
+                                            Saldo Tidak Cukup
+                                        </Button>
+                                        :
+                                        <Button variant = 'green' className = 'ms-auto' onClick = {this.handleCheckout}>
+                                            Check Out
+                                        </Button>
+                                    }
+                                </div>
+                            </div>
+                        }
                     </div>
-                    : this.state.isEmpty? 
-                    <div>
-                        <h4 className='mt-3'>Sepi ya...</h4> 
-                        <Link to = '/'>
-                            <Button variant = 'blue'>
-                                Lihat Film yang Tersedia
-                            </Button>
-                        </Link>
-                    </div> :  
-                    <div className = 'row w-25 ms-auto'>
-                        <div className='col d-flex'>
-                            <p className={classes.subtotal + ' justify-content-center align-self-center'}>Subtotal <b>{this.state.subtotal}</b></p>
-                        </div>
-                        <div className = 'col'>
-                            <Button variant = 'green' className = 'ms-auto' onClick = {this.handleCheckout}>
-                                Check Out
-                            </Button>
-                        </div>
-                    </div>
-                }
+                </div>
             </div>
         )
     }
