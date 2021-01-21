@@ -1,13 +1,50 @@
-// import logo from './logo.svg';
+import React, { Component } from 'react'
 import './App.css';
-import Layout from './container/Layout';
+import Button from './component/Button';
+import Navbar from './component/Navbar';
+import MovieList from './container/MovieList';
+import { 
+  BrowserRouter as Router, 
+  Route, 
+  Switch,
+  useParams
+} from 'react-router-dom'; 
+import MovieDetail from './container/MovieDetail';
 
-function App() {
-  return (
-    <div>
-      <Layout/>
-    </div>
-  );
+export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      balance: 100000,
+    }
+    this.buyMovie = this.buyMovie.bind(this)
+  }
+
+  buyMovie(price) {
+    this.setState({balance: this.state.balance - price})
+  }
+
+  render() {
+    let {id} = useParams()
+    return (
+      <Router>
+        <Navbar balance = {this.state.balance}/>
+        <div className="container py-5">
+          <Switch> 
+            <Route exact path='/'>
+              <MovieList buyMovie = {this.buyMovie}/>
+            </Route> 
+            <Route path='/cart/' >
+              <Button variant="blue">This is the cart</Button>
+            </Route>
+            <Route path='/:id' >
+              {/* <MovieDetail/> */}
+              <Button variant="blue">{id}</Button>
+            </Route> 
+          </Switch>           
+        </div>
+      </Router>
+    );
+  }
+
 }
-
-export default App;

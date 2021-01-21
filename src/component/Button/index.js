@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
+import React, { Children, Component } from 'react'
 import classes from './Button.module.css'
 
 const Button = (props) => {
-    const {onclick, label, variant} = props
+    const {onclick, children, variant} = props
     const color = {
         "blue": classes.blue,
         "white": classes.white,
@@ -11,7 +11,7 @@ const Button = (props) => {
 
     return (
         <div className = {classes.button + ' ' + color[variant]} onClick={onclick}>
-            {label}
+            {children}
         </div>
     )
 }

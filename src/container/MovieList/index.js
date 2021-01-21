@@ -71,6 +71,7 @@ export default class MovieList extends Component {
     render() {
         return (
             <div>
+                <h3>Showing Now in Indonesia</h3>
                 <div className="row my-5">
                     {
                         this.state.movies.map((movie) => (
