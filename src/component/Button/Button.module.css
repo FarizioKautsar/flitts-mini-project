@@ -1,0 +1,42 @@
+.button {
+    border-radius: 5px;
+    font-size: 14px;
+    padding: 5px 10px;
+    transition: cubic-bezier(0.165, 0.84, 0.44, 1) 150ms;
+    cursor: pointer;
+    text-align: center;
+    width: max-content;
+}
+
+.blue {
+    background: #2B5C89;
+    box-shadow: 0px 5px 15px rgba(43, 92, 137, 0.5);
+    color: white;
+}
+
+.blue:hover {
+    box-shadow: 0px 0px 5px rgba(43, 92, 137, 0.5);
+    transform: scale(0.97);
+}
+
+.white {
+    background: #2B5C89;
+    box-shadow: 0px 5px 15px rgba(43, 92, 137, 0.5);
+    color: white;
+}
+
+.white:hover {
+    box-shadow: 0px 0px 5px rgba(43, 92, 137, 0.5);
+    transform: scale(0.97);
+}
+
+.green {
+    background: #2B5C89;
+    box-shadow: 0px 5px 15px rgba(43, 92, 137, 0.5);
+    color: white;
+}
+
+.green:hover {
+    box-shadow: 0px 0px 5px rgba(43, 92, 137, 0.5);
+    transform: scale(0.97);
+}

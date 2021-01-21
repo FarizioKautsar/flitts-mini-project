@@ -1,0 +1,72 @@
+.window {
+    height: 80vh;
+    width: 60vw;
+    background-color: white;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    animation: scale-drop-down 500ms cubic-bezier(0.075, 0.82, 0.165, 1);
+    transform-origin: top left;
+    border-radius: 30px;
+    overflow: hidden;
+    color: #2F2F2F;
+}
+
+.poster {
+    padding-right: 0;
+    padding-left: 0;
+    background-color: white;
+    box-shadow: 3px 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes scale-drop-down {
+    0% {
+        top: 45%;
+        /* transform: scaleX(0.85); */
+    }
+    100% {
+        top: 50%;
+        /* transform: scaleX(1); */
+    }
+}
+
+.poster p {
+    margin: 0;
+}
+
+.title {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.price {
+    font-weight: 700;
+    color: #2B5C89;
+}
+
+.overview {
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.movieDesc {
+    padding: 15px;
+    max-height: 100%;
+    /* white-space: nowrap; */
+    /* text-overflow: ellipsis;
+    display: inline-block; */
+    overflow: hidden;
+    position: relative;
+    bottom: 0;
+}
+
+h4 {
+    font-weight: 600;
+    color: #2B5C89;
+}
+
+.movieDetail {
+    padding: 30px;
+}
