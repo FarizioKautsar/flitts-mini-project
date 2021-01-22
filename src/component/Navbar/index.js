@@ -24,7 +24,7 @@ export default class Navbar extends Component {
         // Class name for menu
         const show = (this.state.menu) ? "show" : "" ;
         return (
-            <nav className="navbar navbar-expand-sm">
+            <nav className="navbar navbar-expand-md">
                 <div className="container-fluid">
                     <Link to = '/' className="navbar-brand" href="/">Stream<b>Flix</b></Link>
                     <button className="navbar-toggler" type="button" onClick={this.toggleMenu}>
@@ -35,15 +35,13 @@ export default class Navbar extends Component {
                             <li className="nav-item d-flex align-items-center">
                                 <p className='nav-link'>Saldo Anda <b>Rp{this.props.balance}</b></p>
                             </li>
-                            <li className="nav-item">
+                            <li className="nav-item d-flex">
                                 <Link to="/keranjang" className="nav-link">
                                     <Button className="my-auto" variant="blue">
                                         <i className="fas fa-shopping-cart"></i>
                                     </Button>
                                 </Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link to="/koleksi" className="nav-link">
+                                <Link to="/koleksi" className="nav-link ms-auto">
                                     <Button className="my-auto" variant="white">
                                         Film Saya
                                     </Button>

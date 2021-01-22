@@ -36,7 +36,7 @@ export default class MovieListItem extends Component {
         const movie = this.props.movie
         return (
             // Breakpoints for each screen sizes
-            <div className='col-sm-4 col-md-2 col-6 mb-4'>
+            <div className='col-md-2 col-sm-4 col-6 mb-4'>
                 <div className = {classes.movieListItem}>
                     <Link to = {this.slug(movie.id, movie.title)} style={{textDecoration: 'none'}}>
                         {

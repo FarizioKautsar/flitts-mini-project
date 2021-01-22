@@ -31,16 +31,18 @@ export default class CartItem extends Component {
                     to = {this.slug(movie.id, movie.title)} 
                     className='row'
                     style={{textDecoration: 'none'}}>
-                    <div className='col-2'>
+                    <div className='col-md-2 col-3'>
                         <img src = {'https://www.themoviedb.org/t/p/w600_and_h900_bestv2' + movie.poster_path} alt={movie.title}></img>
                     </div>
-                    <div className='col-6 ms-3'>
+                    <div className='col-8'>
                         <p className={MovieListClasses.title}>{movie.title}</p>
                         <p className={MovieListClasses.year}>{movie.release_date}</p>
                         <p className={MovieListClasses.price}>Rp{this.props.price}</p>
                     </div>
                 </Link>
-                <Button className={classes.removeButton} variant='red' onClick={this.handleRemoveFromCart}>Remove</Button>
+                <Button className={classes.removeButton} variant='red' onClick={this.handleRemoveFromCart}>
+                <strong> ✖</strong>
+                </Button>
             </div>
         )
     }

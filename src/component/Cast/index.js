@@ -3,7 +3,7 @@ import classes from './Cast.module.css'
 // Item list for casts displayed in MovieDetail
 const Loader = (props) => {
     return (
-        <div className='col-2 mb-4'>
+        <div className='col-xl-2 col-md-3 col-sm-4 col-6 mb-4'>
             <div className={classes.cast}>
                 {
                     // Does it has a link to a profile picture

@@ -7,7 +7,7 @@
     border-radius: 15px;
     overflow: hidden;
     height: max-content;
-    position: sticky;
+    position: inherit;
     top: 6rem;
 }
 
@@ -50,6 +50,9 @@ h4 {
     color: #2B5C89;
 }
 
-.movieDetail {
-    padding-left: 30px;
+
+@media only screen and (min-width: 768px) {
+    .poster{
+        position: sticky;
+    }
 }

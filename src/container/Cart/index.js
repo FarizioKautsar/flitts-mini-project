@@ -28,7 +28,7 @@ export default class Cart extends Component {
                     {
                         // If cart is not empty, show CartItems
                         this.props.cart.length?
-                        <div className='col-8'>
+                        <div className='col-md-8'>
                             {
                                 this.props.cart.map((cartItem) => (
                                     <CartItem 
@@ -40,13 +40,13 @@ export default class Cart extends Component {
                         </div>
                         : null
                     }
-                    <div className='col'>
+                    <div className='col-md'>
                         {
-                            // Has Checked Out?
+                            // Has checked Out
                             this.state.checkoutSuccess? 
                             <div>
                                 <h4 className='mt-3'>Checkout berhasil!</h4> 
-                                <Link to = '/your-movies'>
+                                <Link to = '/koleksi'>
                                     <Button variant = 'blue'>
                                         Lihat Film Saya
                                     </Button>
@@ -61,9 +61,9 @@ export default class Cart extends Component {
                                         Lihat Film yang Tersedia
                                     </Button>
                                 </Link>
-                            </div> : 
+                            </div> 
                             // Cart is not empty
-                            <div className = 'row  ms-auto'>
+                            : <div className = 'row ms-auto'>
                                 <div className='col d-flex'>
                                     <p className={classes.subtotal + ' justify-content-center align-self-center'}>
                                         Subtotal <b>Rp{this.props.subtotal}</b></p>

@@ -98,39 +98,41 @@ export default class MovieDetail extends Component {
         return (
             <div className='row'>
                 {/* Sticky info about movie */}
-                <div className={classes.poster + ' col'}>
-                    <img src = {'https://www.themoviedb.org/t/p/w600_and_h900_bestv2' + movie.poster_path} alt={movie.title} className='w-100'></img>
-                    <div className={MovieListClasses.movieDesc}>
-                        <p className={MovieListClasses.title}>{movie.title}</p>
-                        <p className={MovieListClasses.year}>{movie.release_date}</p>
-                        <p className={MovieListClasses.year}>{movie.runtime + ' menit'}</p>
-                        <p className={MovieListClasses.price}>Rp{this.state.price}</p>
-                        {
-                            // If not owned, show button to add/remove to/from cart
-                            !this.state.isOwned?
-                            <Button 
-                                variant={this.state.inCart? 'red' : 'green'} 
-                                className='w-100 mt-3'
-                                // If movie not in cart, provide button to add to cart and vice versa
-                                onClick = {this.state.inCart? this.handleRemoveFromCart : this.handleAddToCart}>
-                                {
-                                    this.state.inCart?
-                                    'Hapus dari Keranjang'
-                                    : 
-                                    'Tambah ke Keranjang' 
-                                }
-                            </Button>
-                            : 
-                            // Fake button to watch the movie
-                            <Button variant = 'blue' className='w-100 mt-3'>
-                                Tonton
-                            </Button>
-                        }
+                <div className='col-md-3 mb-5'>
+                    <div className={classes.poster}>
+                        <img src = {'https://www.themoviedb.org/t/p/w600_and_h900_bestv2' + movie.poster_path} alt={movie.title} className='w-100'></img>
+                        <div className={MovieListClasses.movieDesc}>
+                            <p className={MovieListClasses.title}>{movie.title}</p>
+                            <p className={MovieListClasses.year}>{movie.release_date}</p>
+                            <p className={MovieListClasses.year}>{movie.runtime + ' menit'}</p>
+                            <p className={MovieListClasses.price}>Rp{this.state.price}</p>
+                            {
+                                // If not owned, show button to add/remove to/from cart
+                                !this.state.isOwned?
+                                <Button 
+                                    variant={this.state.inCart? 'red' : 'green'} 
+                                    className='w-100 mt-3'
+                                    // If movie not in cart, provide button to add to cart and vice versa
+                                    onClick = {this.state.inCart? this.handleRemoveFromCart : this.handleAddToCart}>
+                                    {
+                                        this.state.inCart?
+                                        'Hapus dari Keranjang'
+                                        : 
+                                        'Tambah ke Keranjang' 
+                                    }
+                                </Button>
+                                : 
+                                // Fake button to watch the movie
+                                <Button variant = 'blue' className='w-100 mt-3'>
+                                    Tonton
+                                </Button>
+                            }
+                        </div>
                     </div>
                 </div>
                 
                 {/* Movie Detail */}
-                <div className={classes.movieDetail + ' col-9'}>
+                <div className={classes.movieDetail + ' col'}>
                     <h4>Gambaran</h4>
                     <p className={classes.year}>{movie.overview}</p>
                     <h4>Pemeran</h4>
