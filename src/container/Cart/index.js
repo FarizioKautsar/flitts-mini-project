@@ -4,6 +4,7 @@ import CartItem from '../../component/CartItem'
 import { Link } from 'react-router-dom';
 import classes from './Cart.module.css';
 import { Helmet } from 'react-helmet'
+import CurrencyFormat from 'react-currency-format';
 
 export default class Cart extends Component {
     constructor(props) {
@@ -71,7 +72,13 @@ export default class Cart extends Component {
                             : <div className = 'row ms-auto'>
                                 <div className='col d-flex'>
                                     <p className={classes.subtotal + ' justify-content-center align-self-center'}>
-                                        Subtotal <b>Rp{this.props.subtotal}</b></p>
+                                        Subtotal <b>
+                                        <CurrencyFormat 
+                                            value={this.props.subtotal} 
+                                            displayType={'text'} 
+                                            thousandSeparator={true} 
+                                            prefix={'Rp'}/>
+                                            </b></p>
                                 </div>
                                 <div className = 'col'>
                                     {

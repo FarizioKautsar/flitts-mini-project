@@ -3,6 +3,7 @@ import classes from './CartItem.module.css'
 import MovieListClasses from '../MovieListItem/MovieListItem.module.css'
 import { Link } from 'react-router-dom'
 import Button from '../Button'
+import CurrencyFormat from 'react-currency-format';
 
 // Item list for Cart
 export default class CartItem extends Component {
@@ -41,7 +42,13 @@ export default class CartItem extends Component {
                             <p className={MovieListClasses.year}>{movie.release_date.substr(0,4)}</p>
                             : null
                         }
-                        <p className={MovieListClasses.price}>Rp{this.props.price}</p>
+                        <p className={MovieListClasses.price}>
+                            <CurrencyFormat 
+                                value={this.props.price} 
+                                displayType={'text'} 
+                                thousandSeparator={true} 
+                                prefix={'Rp'}/>
+                        </p>
                     </div>
                 </Link>
                 <Button className={classes.removeButton} variant='red' onClick={this.handleRemoveFromCart}>
