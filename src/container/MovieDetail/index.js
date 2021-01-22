@@ -6,6 +6,7 @@ import Cast from '../../component/Cast'
 import Button from '../../component/Button'
 import Loader from '../../component/Loader';
 import Rating from '../../component/Rating';
+import MovieList from '../MovieList';
 
 // Movie detail for a movie
 // Can be accessed from MovieList, Cart, or URL
@@ -13,10 +14,14 @@ export default class MovieDetail extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoading: true,
-            isLoadingCast: true,
             movie: {},
             casts: [],
+            similar: [],
+            recommendations: [],
+            isLoading: true,
+            isLoadingCast: true,
+            isLoadingSimilar: true,
+            isLoadingRecommendations: true,
             inCart: false,
             isOwned: false,
         }
@@ -33,7 +38,24 @@ export default class MovieDetail extends Component {
         const movieId = slug.substr(0, slug.indexOf('-'))
         // Get movie data from movieId
         this.loadMovie(movieId)
-        
+    }
+
+    // Do if component receive new props (from links)
+    componentWillReceiveProps(newProps) {
+        // Get slug for current movie
+        const slug = newProps.match.params.slug
+        // Get Movie ID from slug
+        const movieId = slug.substr(0, slug.indexOf('-'))
+        if (!this.state.movie.id == parseInt(movieId)) {
+            this.setState({
+                isLoading: true,
+                isLoadingCast: true,
+                isLoadingSimilar: true,
+                isLoadingRecommendations: true,
+            })
+        }
+        // Get movie data from movieId
+        this.loadMovie(movieId)
     }
     
     // Calculate price based on average vote
@@ -64,6 +86,8 @@ export default class MovieDetail extends Component {
             })
             // After the movie loads, load the credits (Casts)
             this.loadCredits(id)
+            this.loadSimilar(id)
+            this.loadRecommendations(id)
         } catch (error) {
             alert("Terjadi kesalahan saat memuat film.")
             console.log(error)
@@ -86,18 +110,50 @@ export default class MovieDetail extends Component {
         }
     }
 
+    // Asynchronous load movie's similar movies
+    async loadSimilar(id) {
+        try {
+            // ie. https://api.themoviedb.org/3/movie/123456/credits
+            const {data} = await APIConfig.get('/movie/' + id + '/similar')
+            // Change casts state to data
+            this.setState({
+                isLoadingSimilar: false, 
+                similar: data.results
+            })
+        } catch (error) {
+            alert("Terjadi kesalahan saat memuat credit film.")
+            console.log(error)
+        }
+    }
+
+    // Asynchronous load movie's recommended movies
+    async loadRecommendations(id) {
+        try {
+            // ie. https://api.themoviedb.org/3/movie/123456/recommendations
+            const {data} = await APIConfig.get('/movie/' + id + '/recommendations')
+            // Change casts state to data
+            this.setState({
+                isLoadingRecommendations: false, 
+                recommendations: data.results
+            })
+        } catch (error) {
+            alert("Terjadi kesalahan saat memuat credit film.")
+            console.log(error)
+        }
+    }
+
     // Propagate to App's addToCart
     // Change movie as in cart
     handleAddToCart(e) {
-        this.setState({inCart: true})
         this.props.addToCart(this.state.movie, this.state.price)
+        this.setState({inCart: true})
     }
 
     // Propagate to App's removeFromCart
     // Change movie as not in cart
     handleRemoveFromCart(e) {
-        this.setState({inCart: false})
         this.props.removeFromCart(this.state.movie, this.state.price)
+        this.setState({inCart: false})
     }
 
     render() {
@@ -121,7 +177,10 @@ export default class MovieDetail extends Component {
                                         <p className={MovieListClasses.year}>{movie.release_date.substr(0,4)}</p>
                                         : null
                                     }
-                                    <p className={MovieListClasses.year}>{movie.runtime + ' menit'}</p>
+                                    {
+                                        this.state.movie.runtime>0 &&
+                                        <p className={MovieListClasses.year}>{movie.runtime + ' menit'}</p>
+                                    }
                                     <p className={`${MovieListClasses.price} mt-2`}>Rp{this.state.price}</p>
                                     {
                                         // If not owned, show button to add/remove to/from cart
@@ -157,20 +216,51 @@ export default class MovieDetail extends Component {
                 <div className={classes.movieDetail + ' col'}>
                     {
                         this.state.isLoadingCast? 
-                        <Loader>Memuat Detail</Loader>
+                        <Loader>Memuat Pemeran</Loader>
                         :
                         <div>
-                            <h4>Gambaran</h4>
+                            <h4>Sinopsis</h4>
                             <p className={classes.year}>{movie.overview}</p>
-                            <h4>Pemeran</h4>
-                            <div className='row'>
-                                {
-                                    casts.map((cast) => (
-                                        <Cast name={cast.name} profile_path={cast.profile_path}></Cast>
-                                    ))
-                                }
-                            </div>
+                            {
+                                this.state.casts.length>0 &&
+                                <div>
+                                    <h4>Pemeran</h4>
+                                    <div className='row'>
+                                        {
+                                            casts.map((cast) => (
+                                                <Cast name={cast.name} profile_path={cast.profile_path}></Cast>
+                                            ))
+                                        }
+                                    </div>
+                                </div>
+                            }
                         </div>
+                    }
+                    {
+                        this.state.isLoadingSimilar? 
+                        <Loader>Memuat Film Serupa</Loader>
+                        :
+                        this.state.similar.length>0 &&
+                        <MovieList
+                            addToCart = {this.props.addToCart}
+                            removeFromCart = {this.props.removeFromCart}
+                            movies = {this.state.similar}
+                            cart = {this.props.cart}
+                            owned = {this.props.owned}
+                        >Film Serupa</MovieList>
+                    }
+                    {
+                        this.state.isLoadingRecommendations? 
+                        <Loader>Memuat Rekomendasi Film</Loader>
+                        :
+                        this.state.recommendations.length>0 &&
+                        <MovieList
+                            addToCart = {this.props.addToCart}
+                            removeFromCart = {this.props.removeFromCart}
+                            movies = {this.state.recommendations}
+                            cart = {this.props.cart}
+                            owned = {this.props.owned}
+                        >Rekomendasi Film</MovieList>
                     }
                 </div>
             </div>

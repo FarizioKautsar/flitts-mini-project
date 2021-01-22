@@ -28,8 +28,8 @@ export default class MovieList extends Component {
         return (
             <div>
                 {/* Title of current List */}
-                <h2>{this.props.children}</h2>
-                <div className="row my-5">
+                <h4>{this.props.children}</h4>
+                <div className="row">
                     {
                         // Lists all movies from props
                         this.props.movies.map((movie) => (
@@ -41,6 +41,7 @@ export default class MovieList extends Component {
                                 isOwned = {this.props.owned.some(m => m.id === movie.id)? true : false}
                                 addToCart = {this.props.addToCart}
                                 removeFromCart = {this.props.removeFromCart}
+                                mod = {this.props.mod}
                             />
                         ))
                     }

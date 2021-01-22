@@ -3,6 +3,7 @@ import classes from './MovieListItem.module.css'
 import { Link } from 'react-router-dom';
 import Button from '../../component/Button'
 import Rating from '../../component/Rating'
+import LazyLoad from 'react-lazyload';
 
 // List item for movies, shown in MovieList
 export default class MovieListItem extends Component {
@@ -12,7 +13,7 @@ export default class MovieListItem extends Component {
         this.handleRemoveFromCart = this.handleRemoveFromCart.bind(this)
         this.slug = this.slug.bind(this)
     }
-
+    
     // Generate link to a movie
     slug(id, movie) {
         let titleSlug = movie.replace(/\s+/g, '-').toLowerCase();
@@ -41,17 +42,16 @@ export default class MovieListItem extends Component {
                 <div className = {classes.movieListItem}>
                     <Link to = {this.slug(movie.id, movie.title)} style={{textDecoration: 'none'}}>
                         {
-                            // Show appropriate label
-                            this.props.isOwned?
+                            // Show owned label
+                            this.props.isOwned &&
                             <div className={`${classes.label} ${classes.owned}`}>
                                 Di Koleksi
                             </div>
-                            : this.props.inCart?
-                            <div className={`${classes.label} ${classes.inCart}`}>
-                                Di Keranjang
-                            </div> : null
                         }
-                        <img src = {'https://www.themoviedb.org/t/p/w600_and_h900_bestv2' + movie.poster_path} alt={movie.title} className='w-100'></img>
+                        <img 
+                            src = {'https://www.themoviedb.org/t/p/w600_and_h900_bestv2' + movie.poster_path} 
+                            alt={movie.title} 
+                            className='w-100'></img>
                         <div className = {classes.movieDesc}> 
                             {/* <div className={classes.fade}></div> */}
                             <p className={classes.title}>{movie.title}</p>
@@ -67,26 +67,36 @@ export default class MovieListItem extends Component {
                         </div>
                     </Link>
                     {
-                        // If movie is owned, show no button
-                        this.props.isOwned?
-                        null :
-                        <Button
-                            className = {classes.cartButton}
-                            variant={this.props.inCart? 'red' : 'green'} 
-                            onClick = {this.props.inCart? this.handleRemoveFromCart : this.handleAddToCart}>
-                            {
-                                this.props.inCart?
+                        // If movie is not owned, show button
+                        !this.props.isOwned && this.props.mod != "noButton" &&
+                        <div>
+                            {this.props.inCart && 
+                            <Button
+                                className = {`${classes.movieItemButton} ${classes.inCartButton}`}
+                                variant = 'white'>
                                 <div>
-                                    <i className="fas fa-cart-arrow-down"></i>
-                                    <strong> ✖</strong>
+                                    <i className="fas fa-shopping-cart"></i>
+                                    <strong> ✔</strong>
                                 </div>
-                                : 
-                                <div>
-                                    <i className="fas fa-cart-plus"></i>
-                                    <strong> +</strong>
-                                </div>
-                            }
-                        </Button>
+                            </Button>}
+                            <Button
+                                className = {`${classes.movieItemButton} ${classes.cartButton}`}
+                                variant={this.props.inCart? 'red' : 'green'} 
+                                onClick = {this.props.inCart? this.handleRemoveFromCart : this.handleAddToCart}>
+                                {
+                                    this.props.inCart?
+                                    <div>
+                                        <i className="fas fa-cart-arrow-down"></i>
+                                        <strong> ✖</strong>
+                                    </div>
+                                    : 
+                                    <div>
+                                        <i className="fas fa-cart-plus"></i>
+                                        <strong> +</strong>
+                                    </div>
+                                }
+                            </Button>
+                        </div>
                     }
                     {/* <p className={classes.overview}>{movie.overview}</p> */}
                 </div>

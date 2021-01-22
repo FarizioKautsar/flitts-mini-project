@@ -20,16 +20,27 @@
     margin: 0;
 }
 
-.cartButton {
+.movieItemButton {
     position: absolute;
     top: 15px;
     right: 15px;
-    opacity: 0;
     transition: 150ms;
+}
+
+.cartButton {
+    opacity: 0;
+}
+
+.inCartButton {
+    opacity: 1;
 }
 
 .movieListItem:hover .cartButton {
     opacity: 1;
+}
+
+.movieListItem:hover .inCartButton {
+    opacity: 0;
 }
 
 .label {
@@ -44,6 +55,7 @@
 .owned {
     border: solid 1px #4FDB98;
     color: #4FDB98;
+    box-shadow: 0px 0px 15px rgba(79,219,152, 1);
 }
 
 .inCart {

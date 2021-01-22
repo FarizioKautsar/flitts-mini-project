@@ -13,6 +13,11 @@ p {
   color: #2f2f2f;
 }
 
+h2 {
+  font-weight: 700;
+  margin-bottom: 30px;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -39,10 +44,6 @@ a, a:hover{
 
 .navbar p {
   margin: 0;
-}
-
-h2 {
-  font-weight: 700;
 }
 
 .hamburger {
