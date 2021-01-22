@@ -28,7 +28,7 @@ export default class Navbar extends Component {
                     </button>
                     <div className={"collapse navbar-collapse " + show}>
                         <ul className="navbar-nav ms-auto">
-                            <li className="nav-item align-middle">
+                            <li className="nav-item d-flex align-items-center">
                                 <p className='nav-link'>Saldo Anda <b>Rp{this.props.balance}</b></p>
                             </li>
                             <li className="nav-item">

@@ -67,10 +67,11 @@ export default class App extends Component {
 
   checkout() {
     const movies = this.state.owned.concat(this.state.cart.map(c => c.movie))
+    console.log(movies)
     const amountPaid = this.state.subtotal + this.state.amountPaid
     const balance = this.state.balance - this.state.subtotal
     this.setState({
-      owned: this.state.owned.concat(movies), 
+      owned: movies, 
       cart: [], 
       amountPaid: amountPaid, 
       subtotal: 0,
