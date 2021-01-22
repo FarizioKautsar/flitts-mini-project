@@ -10,6 +10,7 @@ const Loader = (props) => {
                     props.profile_path?
                     <img src = {'https://www.themoviedb.org/t/p/w600_and_h900_bestv2' + props.profile_path} alt={props.name} className='w-100'></img>
                     : <div className={classes.noPicture}>
+                        <i className="fas fa-times-circle mb-2"></i>
                         Picture Unavailable
                     </div>
                 }

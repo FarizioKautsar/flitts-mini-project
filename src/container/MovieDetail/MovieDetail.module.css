@@ -7,6 +7,7 @@
     border-radius: 15px;
     overflow: hidden;
     height: max-content;
+    min-height: 150px;
     position: inherit;
     top: 6rem;
 }

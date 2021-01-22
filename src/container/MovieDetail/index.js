@@ -4,6 +4,8 @@ import MovieListClasses from '../../component/MovieListItem/MovieListItem.module
 import { APIConfig } from '../../api/APIConfig';
 import Cast from '../../component/Cast'
 import Button from '../../component/Button'
+import Loader from '../../component/Loader';
+import Rating from '../../component/Rating';
 
 // Movie detail for a movie
 // Can be accessed from MovieList, Cart, or URL
@@ -14,7 +16,6 @@ export default class MovieDetail extends Component {
             isLoading: true,
             isLoadingCast: true,
             movie: {},
-            price: 0,
             casts: [],
             inCart: false,
             isOwned: false,
@@ -32,7 +33,6 @@ export default class MovieDetail extends Component {
     
     // Calculate price based on average vote
     calculatePrice(rating) {
-        console.log(rating)
         if (rating >= 8) {
             return 21250
         } else if (rating >= 6 && rating < 8){
@@ -53,7 +53,6 @@ export default class MovieDetail extends Component {
             this.setState({
                 isLoading: false,
                 movie: data,
-                price: this.calculatePrice(this.state.movie.vote_average),
                 inCart: this.props.cart.some(c => c.movie.id === this.state.movie.id)? true : false,
                 isOwned: this.props.owned.some(m => m.id === this.state.movie.id)? true : false,
             })
@@ -71,7 +70,10 @@ export default class MovieDetail extends Component {
             // ie. https://api.themoviedb.org/3/movie/123456/credits
             const {data} = await APIConfig.get('/movie/' + id + '/credits')
             // Change casts state to data
-            this.setState({isLoadingCast: false, casts: data.cast})
+            this.setState({
+                isLoadingCast: false, 
+                casts: data.cast
+            })
         } catch (error) {
             alert("Terjadi kesalahan saat memuat credit film.")
             console.log(error)
@@ -100,49 +102,70 @@ export default class MovieDetail extends Component {
                 {/* Sticky info about movie */}
                 <div className='col-md-3 mb-5'>
                     <div className={classes.poster}>
-                        <img src = {'https://www.themoviedb.org/t/p/w600_and_h900_bestv2' + movie.poster_path} alt={movie.title} className='w-100'></img>
-                        <div className={MovieListClasses.movieDesc}>
-                            <p className={MovieListClasses.title}>{movie.title}</p>
-                            <p className={MovieListClasses.year}>{movie.release_date}</p>
-                            <p className={MovieListClasses.year}>{movie.runtime + ' menit'}</p>
-                            <p className={MovieListClasses.price}>Rp{this.state.price}</p>
-                            {
-                                // If not owned, show button to add/remove to/from cart
-                                !this.state.isOwned?
-                                <Button 
-                                    variant={this.state.inCart? 'red' : 'green'} 
-                                    className='w-100 mt-3'
-                                    // If movie not in cart, provide button to add to cart and vice versa
-                                    onClick = {this.state.inCart? this.handleRemoveFromCart : this.handleAddToCart}>
+                        {
+                            this.state.isLoading?
+                            <Loader className='mt-5'/>
+                            :
+                            <div>
+                                <img src = {'https://www.themoviedb.org/t/p/w600_and_h900_bestv2' + movie.poster_path} alt={movie.title} className='w-100'></img>
+                                <div className={MovieListClasses.movieDesc}>
+                                    <p className={MovieListClasses.title}>{movie.title}</p>
                                     {
-                                        this.state.inCart?
-                                        'Hapus dari Keranjang'
-                                        : 
-                                        'Tambah ke Keranjang' 
+                                        movie.release_date?
+                                        <p className={MovieListClasses.year}>{movie.release_date.substr(0,4)}</p>
+                                        : null
                                     }
-                                </Button>
-                                : 
-                                // Fake button to watch the movie
-                                <Button variant = 'blue' className='w-100 mt-3'>
-                                    Tonton
-                                </Button>
-                            }
-                        </div>
+                                    <p className={MovieListClasses.year}>{movie.runtime + ' menit'}</p>
+                                    <p className={`${MovieListClasses.price} mt-2`}>Rp{this.calculatePrice(movie.vote_average)}</p>
+                                    {
+                                        // If not owned, show button to add/remove to/from cart
+                                        !this.state.isOwned?
+                                        <Button 
+                                            variant={this.state.inCart? 'red' : 'green'} 
+                                            className='w-100 mt-3'
+                                            // If movie not in cart, provide button to add to cart and vice versa
+                                            onClick = {this.state.inCart? this.handleRemoveFromCart : this.handleAddToCart}>
+                                            {
+                                                this.state.inCart?
+                                                'Hapus dari Keranjang'
+                                                : 
+                                                'Tambah ke Keranjang' 
+                                            }
+                                        </Button>
+                                        : 
+                                        // Fake button to watch the movie
+                                        <Button variant = 'blue' className='w-100 mt-3'>
+                                            Tonton
+                                        </Button>
+                                    }
+                                    <Rating>
+                                        {movie.vote_average}
+                                    </Rating>
+                                </div>
+                            </div>
+                        }
                     </div>
                 </div>
                 
                 {/* Movie Detail */}
                 <div className={classes.movieDetail + ' col'}>
-                    <h4>Gambaran</h4>
-                    <p className={classes.year}>{movie.overview}</p>
-                    <h4>Pemeran</h4>
-                    <div className='row'>
-                        {
-                            casts.map((cast) => (
-                                <Cast name={cast.name} profile_path={cast.profile_path}></Cast>
-                            ))
-                        }
-                    </div>
+                    {
+                        this.state.isLoadingCast? 
+                        <Loader>Memuat Detail</Loader>
+                        :
+                        <div>
+                            <h4>Gambaran</h4>
+                            <p className={classes.year}>{movie.overview}</p>
+                            <h4>Pemeran</h4>
+                            <div className='row'>
+                                {
+                                    casts.map((cast) => (
+                                        <Cast name={cast.name} profile_path={cast.profile_path}></Cast>
+                                    ))
+                                }
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
         )

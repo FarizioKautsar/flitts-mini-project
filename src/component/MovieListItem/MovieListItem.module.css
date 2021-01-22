@@ -70,10 +70,6 @@
 .movieDesc {
     padding: 15px;
     max-height: 100%;
-    /* white-space: nowrap; */
-    /* text-overflow: ellipsis;
-    display: inline-block; */
-    overflow: hidden;
     position: relative;
     bottom: 0;
 }

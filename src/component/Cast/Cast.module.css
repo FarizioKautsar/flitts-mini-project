@@ -8,8 +8,19 @@
 }
 
 .noPicture {
-    height: 100%;
-    padding-top: 66.666666%;
+    height: 69%;
+    color: #999999;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* padding-top: 66.666666%; */
+    background-color: #e4e4e4;
+}
+
+.noPicture i{
+    font-size: 45px;
 }
 
 .castDesc {

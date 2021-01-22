@@ -1,0 +1,39 @@
+.rating {
+    /* font-size: 200px; */
+    border-radius: 50%;
+    background-color: white;
+    position: absolute;
+    padding: 5px;
+    top: -55px;
+    right: 15px;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+}
+
+.good {
+    border: 1px solid #4FDB98;
+    color: #4FDB98;
+    box-shadow: 0px 0px 15px rgba(79,219,152, 1);
+}
+
+.decent {
+    border: 1px solid #5EA3E2;
+    color: #5EA3E2;
+    box-shadow: 0px 0px 15px rgba(94,163,226,1);
+}
+
+.mediocre {
+    border: 1px solid #F0C963;
+    color: #F0C963;
+    box-shadow: 0px 0px 15px rgba(240,201,99,1);
+}
+
+.bad {
+    border: 1px solid #FB8484;
+    color: #FB8484;
+    box-shadow: 0px 0px 15px rgba(251,132,132,1);
+}
