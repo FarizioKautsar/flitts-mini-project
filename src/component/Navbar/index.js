@@ -31,8 +31,10 @@ export default class Navbar extends Component {
                         <span className="navbar-toggler-icon hamburger"></span>
                     </button>
                     <div className={"collapse navbar-collapse " + show}>
-                        <ul className="navbar-nav ms-auto">
-                            <li className="nav-item d-flex align-items-center">
+                        {/* <ul className="navbar-nav me-auto">
+                        </ul> */}
+                        <ul className="navbar-nav w-100 me-auto">
+                            <li className="nav-item d-flex align-items-center ms-auto">
                                 <p className='nav-link'>Saldo Anda <b>Rp{this.props.balance}</b></p>
                             </li>
                             <li className="nav-item d-flex">

@@ -24,6 +24,7 @@ export default class App extends Component {
 		subtotal: JSON.parse(localStorage.getItem('subtotal')) || 0,
 		cart: JSON.parse(localStorage.getItem('cart')) || [],
 		owned: JSON.parse(localStorage.getItem('owned')) || [],
+		search: '',
 		page: 1,
 		}
 		this.baseState = this.state
@@ -95,6 +96,7 @@ export default class App extends Component {
 		localStorage.setItem('subtotal', 0)
 	}
 
+	// Reset application
 	sellAll() {
 		this.setState(this.baseState)
 		localStorage.clear()
@@ -111,6 +113,7 @@ export default class App extends Component {
 			movies: this.state.movies.concat(data.results), 
 			page: this.state.page + 1,
 		})
+		console.log(this.state.page)
 		} catch (error) {
 			alert("Terjadi kesalahan saat memuat film.")
 			console.log(error)
@@ -121,18 +124,17 @@ export default class App extends Component {
 		return (
 		<Router>
 			{/* Navbar that shows balance */}
-			<Navbar balance = {this.state.balance}/>
+			<Navbar balance = {this.state.balance} onChange={this.handleSearch}/>
 			<div className="container py-5 mt-5">
 				{/* Switch component depending on URL */}
 				<Switch> 
 					{/* Home */}
 					<Route exact path='/'>
-						<h2>Now Showing in Indonesia</h2>
+						<h2>Tayang di Indonesia</h2>
 						{
 							this.state.isLoading? <Loader/> :
 							<div id="scrollableDiv">
 							<InfiniteScroll
-								pageStart={0}
 								loadMore={this.loadMovies}
 								hasMore={true}
 								loader={<Loader></Loader>}

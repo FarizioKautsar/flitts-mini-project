@@ -3,7 +3,6 @@ import classes from './MovieListItem.module.css'
 import { Link } from 'react-router-dom';
 import Button from '../../component/Button'
 import Rating from '../../component/Rating'
-import LazyLoad from 'react-lazyload';
 
 // List item for movies, shown in MovieList
 export default class MovieListItem extends Component {
@@ -68,7 +67,7 @@ export default class MovieListItem extends Component {
                     </Link>
                     {
                         // If movie is not owned, show button
-                        !this.props.isOwned && this.props.mod != "noButton" &&
+                        !this.props.isOwned && this.props.mod !== "noButton" &&
                         <div>
                             {this.props.inCart && 
                             <Button
