@@ -20,13 +20,13 @@ export default class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-		movies: [],
-		balance: JSON.parse(localStorage.getItem('balance')) || 100000,
-		subtotal: JSON.parse(localStorage.getItem('subtotal')) || 0,
-		cart: JSON.parse(localStorage.getItem('cart')) || [],
-		owned: JSON.parse(localStorage.getItem('owned')) || [],
-		search: '',
-		page: 1,
+			movies: [],
+			balance: JSON.parse(localStorage.getItem('balance')) || 100000,
+			subtotal: JSON.parse(localStorage.getItem('subtotal')) || 0,
+			cart: JSON.parse(localStorage.getItem('cart')) || [],
+			owned: JSON.parse(localStorage.getItem('owned')) || [],
+			search: '',
+			page: 1,
 		}
 		this.baseState = this.state
 		this.addToCart = this.addToCart.bind(this)
@@ -97,7 +97,12 @@ export default class App extends Component {
 
 	// Reset application
 	sellAll() {
-		this.setState(this.baseState)
+		this.setState({
+			balance: 100000,
+			subtotal: 0,
+			cart: [],
+			owned: [],
+		})
 		localStorage.clear()
 	}
 
