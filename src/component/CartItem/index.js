@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import classes from './CartItem.module.css'
 import MovieListClasses from '../MovieListItem/MovieListItem.module.css'
-import { Link } from 'react-router-dom';
-import Button from '../Button';
+import { Link } from 'react-router-dom'
+import Button from '../Button'
 
+// Item list for Cart
 export default class CartItem extends Component {
     constructor(props) {
         super(props);
@@ -11,11 +12,13 @@ export default class CartItem extends Component {
         this.handleRemoveFromCart = this.handleRemoveFromCart.bind(this)
     }
 
+    // Generate link to a movie
     slug(id, movie) {
         let titleSlug = movie.replace(/\s+/g, '-').toLowerCase();
         return (id+'-'+titleSlug)
     }
 
+    // Removes movie from cart and subtract subtotal
     handleRemoveFromCart() {
         this.props.removeFromCart(this.props.movie, this.props.price)
     }

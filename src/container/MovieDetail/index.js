@@ -4,8 +4,9 @@ import MovieListClasses from '../../component/MovieListItem/MovieListItem.module
 import { APIConfig } from '../../api/APIConfig';
 import Cast from '../../component/Cast'
 import Button from '../../component/Button'
-import {Link} from 'react-router-dom'
 
+// Movie detail for a movie
+// Can be accessed from MovieList, Cart, or URL
 export default class MovieDetail extends Component {
     constructor(props) {
         super(props);
@@ -21,8 +22,15 @@ export default class MovieDetail extends Component {
         this.handleAddToCart = this.handleAddToCart.bind(this)
         this.handleRemoveFromCart = this.handleRemoveFromCart.bind(this)
         this.calculatePrice = this.calculatePrice.bind(this)
+        // Get slug for current movie
+        const slug = this.props.match.params.slug
+        // Get Movie ID from slug
+        const movieId = slug.substr(0, slug.indexOf('-'))
+        // Get movie data from movieId
+        this.loadMovie(movieId)
     }
     
+    // Calculate price based on average vote
     calculatePrice(rating) {
         console.log(rating)
         if (rating >= 8) {
@@ -36,16 +44,20 @@ export default class MovieDetail extends Component {
         }
     }
 
+    // Asynchronous load movie information
     async loadMovie(id) {
         try {
+            // ie. https://api.themoviedb.org/3/movie/123456
             const {data} = await APIConfig.get('/movie/' + id)
-            this.setState({isLoading: false, movie: data})
+            // Change state to movie's data
             this.setState({
+                isLoading: false,
+                movie: data,
                 price: this.calculatePrice(this.state.movie.vote_average),
                 inCart: this.props.cart.some(c => c.movie.id === this.state.movie.id)? true : false,
                 isOwned: this.props.owned.some(m => m.id === this.state.movie.id)? true : false,
             })
-            console.log(this.props.cart)
+            // After the movie loads, load the credits (Casts)
             this.loadCredits(id)
         } catch (error) {
             alert("Terjadi kesalahan saat memuat film.")
@@ -53,9 +65,12 @@ export default class MovieDetail extends Component {
         }
     }
 
+    // Asynchronous load movie's credit information
     async loadCredits(id) {
         try {
+            // ie. https://api.themoviedb.org/3/movie/123456/credits
             const {data} = await APIConfig.get('/movie/' + id + '/credits')
+            // Change casts state to data
             this.setState({isLoadingCast: false, casts: data.cast})
         } catch (error) {
             alert("Terjadi kesalahan saat memuat credit film.")
@@ -63,19 +78,16 @@ export default class MovieDetail extends Component {
         }
     }
 
-    componentDidMount() {
-        const slug = this.props.match.params.slug
-        const movieId = slug.substr(0, slug.indexOf('-'))
-        this.loadMovie(movieId)
-    }
-
+    // Propagate to App's addToCart
+    // Change movie as in cart
     handleAddToCart(e) {
         this.setState({inCart: true})
         this.props.addToCart(this.state.movie, this.state.price)
     }
 
+    // Propagate to App's removeFromCart
+    // Change movie as not in cart
     handleRemoveFromCart(e) {
-        console.log('movie detail remove from cart')
         this.setState({inCart: false})
         this.props.removeFromCart(this.state.movie, this.state.price)
     }
@@ -85,6 +97,7 @@ export default class MovieDetail extends Component {
         const casts = this.state.casts
         return (
             <div className='row'>
+                {/* Sticky info about movie */}
                 <div className={classes.poster + ' col'}>
                     <img src = {'https://www.themoviedb.org/t/p/w600_and_h900_bestv2' + movie.poster_path} alt={movie.title} className='w-100'></img>
                     <div className={MovieListClasses.movieDesc}>
@@ -93,10 +106,12 @@ export default class MovieDetail extends Component {
                         <p className={MovieListClasses.year}>{movie.runtime + ' minutes'}</p>
                         <p className={MovieListClasses.price}>Rp{this.state.price}</p>
                         {
+                            // If not owned, show button to add/remove to/from cart
                             !this.state.isOwned?
                             <Button 
                                 variant={this.state.inCart? 'red' : 'green'} 
                                 className='w-100 mt-3'
+                                // If movie not in cart, provide button to add to cart and vice versa
                                 onClick = {this.state.inCart? this.handleRemoveFromCart : this.handleAddToCart}>
                                 {
                                     this.state.inCart?
@@ -106,12 +121,15 @@ export default class MovieDetail extends Component {
                                 }
                             </Button>
                             : 
+                            // Fake button to watch the movie
                             <Button variant = 'blue' className='w-100 mt-3'>
                                 Tonton
                             </Button>
                         }
                     </div>
                 </div>
+                
+                {/* Movie Detail */}
                 <div className={classes.movieDetail + ' col-9'}>
                     <h4>Overview</h4>
                     <p className={classes.year}>{movie.overview}</p>

@@ -2,17 +2,16 @@ import React, { Component } from 'react'
 import MovieListItem from '../../component/MovieListItem';
 import Loader from '../../component/Loader';
 
+// Container for MovieListItem
+// Lists movies
 export default class MovieList extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            movies: this.props.movies,
-            isLoading: false,
-            searchMovie: "",
-        }
         this.calculatePrice = this.calculatePrice.bind(this)
     }
 
+    // Calculate price based on average vote
+    // Generate to all item list
     calculatePrice(rating) {
         if (rating >= 8) {
             return 21250
@@ -28,12 +27,11 @@ export default class MovieList extends Component {
     render() {
         return (
             <div>
+                {/* Title of current List */}
                 <h2>{this.props.children}</h2>
-                {
-                    this.state.isLoading && <Loader/>
-                }
                 <div className="row my-5">
                     {
+                        // Lists all movies from props
                         this.props.movies.map((movie) => (
                             <MovieListItem
                                 key = {movie.id}

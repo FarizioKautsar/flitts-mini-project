@@ -4,6 +4,8 @@ import {
     Link, 
 } from 'react-router-dom'; 
 
+// Navbar for the whole app
+// Made using bootstrap https://getbootstrap.com/docs/5.0/components/navbar/
 export default class Navbar extends Component {
     constructor(props) {
         super(props);
@@ -13,11 +15,13 @@ export default class Navbar extends Component {
         this.toggleMenu = this.toggleMenu.bind(this);
     }
 
+    // Toggle hamburger menu
     toggleMenu(){
         this.setState({ menu: !this.state.menu })
     }
 
     render() {
+        // Class name for menu
         const show = (this.state.menu) ? "show" : "" ;
         return (
             <nav className="navbar navbar-expand-sm">
@@ -32,14 +36,14 @@ export default class Navbar extends Component {
                                 <p className='nav-link'>Saldo Anda <b>Rp{this.props.balance}</b></p>
                             </li>
                             <li className="nav-item">
-                                <Link to="/cart" className="nav-link">
+                                <Link to="/keranjang" className="nav-link">
                                     <Button className="my-auto" variant="blue">
                                         <i className="fas fa-shopping-cart"></i>
                                     </Button>
                                 </Link>
                             </li>
                             <li className="nav-item">
-                                <Link to="/your-movies" className="nav-link">
+                                <Link to="/koleksi" className="nav-link">
                                     <Button className="my-auto" variant="white">
                                         Film Saya
                                     </Button>

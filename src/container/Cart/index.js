@@ -8,12 +8,13 @@ export default class Cart extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            insufficient: false,
             checkoutSuccess: false,
         }
         this.handleCheckout = this.handleCheckout.bind(this)
     }
 
+    // Empty cart and change state to success
+    // Propagate to App's checkout func
     handleCheckout() {
         this.setState({cart: [], checkoutSuccess: true})
         this.props.checkout()
@@ -25,6 +26,7 @@ export default class Cart extends Component {
                 <h2>Your Cart</h2>
                 <div className='row'>
                     {
+                        // If cart is not empty, show CartItems
                         this.props.cart.length?
                         <div className='col-8'>
                             {
@@ -33,13 +35,14 @@ export default class Cart extends Component {
                                         movie = {cartItem.movie} 
                                         price = {cartItem.price}
                                         removeFromCart = {this.props.removeFromCart}/>
-                                        ))
-                                    }
+                                ))
+                            }
                         </div>
                         : null
                     }
                     <div className='col'>
                         {
+                            // Has Checked Out?
                             this.state.checkoutSuccess? 
                             <div>
                                 <h4 className='mt-3'>Checkout berhasil!</h4> 
@@ -49,7 +52,8 @@ export default class Cart extends Component {
                                     </Button>
                                 </Link>
                             </div>
-                            : this.props.cart.length === 0?  
+                            // Has not checked out and cart is empty
+                            : !this.props.cart.length?  
                             <div>
                                 <h4 className='mt-3'>Sepi ya...</h4> 
                                 <Link to = '/'>
@@ -57,7 +61,8 @@ export default class Cart extends Component {
                                         Lihat Film yang Tersedia
                                     </Button>
                                 </Link>
-                            </div> :  
+                            </div> : 
+                            // Cart is not empty
                             <div className = 'row  ms-auto'>
                                 <div className='col d-flex'>
                                     <p className={classes.subtotal + ' justify-content-center align-self-center'}>
@@ -65,6 +70,7 @@ export default class Cart extends Component {
                                 </div>
                                 <div className = 'col'>
                                     {
+                                        // Insufficient Fund
                                         (this.props.balance - this.props.subtotal) < 0? 
                                         <Button variant = 'red' className = 'ms-auto'>
                                             Saldo Tidak Cukup
