@@ -45,7 +45,7 @@ export default class Navbar extends Component {
                                 </Link>
                                 <Link to="/koleksi" className="nav-link ms-auto">
                                     <Button className="my-auto" variant="white">
-                                        Film Saya
+                                        Koleksi Saya
                                     </Button>
                                 </Link>
                             </li>

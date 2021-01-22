@@ -66,7 +66,7 @@ export default class MovieDetail extends Component {
             return 16350
         } else if (rating >= 3 && rating < 6){
             return 8250
-        } else {
+         } else {
             return 3500
         }
     }

@@ -164,7 +164,7 @@ export default class App extends Component {
 
 					{/* Your Collection */}
 					<Route exact path='/koleksi'>
-						<h2>Koleksi Anda</h2>
+						<h2>Koleksi Saya</h2>
 						<Button variant='blue' onClick={this.sellAll}> 
 							Jual Semua
 						</Button>

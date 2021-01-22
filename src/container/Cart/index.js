@@ -48,7 +48,7 @@ export default class Cart extends Component {
                                 <h4 className='mt-3'>Checkout berhasil!</h4> 
                                 <Link to = '/koleksi'>
                                     <Button variant = 'blue'>
-                                        Lihat Film Saya
+                                        Lihat Koleksi Saya
                                     </Button>
                                 </Link>
                             </div>
