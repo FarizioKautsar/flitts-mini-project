@@ -12,6 +12,7 @@ Switch,
 } from 'react-router-dom'; 
 import MovieDetail from './container/MovieDetail';
 import InfiniteScroll from 'react-infinite-scroller';
+import Button from './component/Button';
 
 // Base App for the whole application
 export default class App extends Component {
@@ -25,10 +26,12 @@ export default class App extends Component {
 		owned: JSON.parse(localStorage.getItem('owned')) || [],
 		page: 1,
 		}
+		this.baseState = this.state
 		this.addToCart = this.addToCart.bind(this)
 		this.removeFromCart = this.removeFromCart.bind(this)
 		this.checkout = this.checkout.bind(this)
 		this.loadMovies = this.loadMovies.bind(this)
+		this.sellAll = this.sellAll.bind(this)
 		this.loadMovies()
 	}
 
@@ -90,6 +93,11 @@ export default class App extends Component {
 		localStorage.setItem('cart', JSON.stringify([]))
 		localStorage.setItem('balance', balance)
 		localStorage.setItem('subtotal', 0)
+	}
+
+	sellAll() {
+		this.setState(this.baseState)
+		localStorage.clear()
 	}
 
 	// Asynchronous load all movies (20 at a time)
@@ -155,6 +163,9 @@ export default class App extends Component {
 					{/* Your Collection */}
 					<Route exact path='/koleksi'>
 						<h2>Koleksi Anda</h2>
+						<Button variant='blue' onClick={this.sellAll}> 
+							Jual Semua
+						</Button>
 						<MovieList 
 							movies = {this.state.owned}
 							cart = {this.state.cart} 

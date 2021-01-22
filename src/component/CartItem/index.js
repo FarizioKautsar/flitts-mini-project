@@ -36,7 +36,11 @@ export default class CartItem extends Component {
                     </div>
                     <div className='col-8'>
                         <p className={MovieListClasses.title}>{movie.title}</p>
-                        <p className={MovieListClasses.year}>{movie.release_date}</p>
+                        {
+                            movie.release_date?
+                            <p className={MovieListClasses.year}>{movie.release_date.substr(0,4)}</p>
+                            : null
+                        }
                         <p className={MovieListClasses.price}>Rp{this.props.price}</p>
                     </div>
                 </Link>

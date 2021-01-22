@@ -23,12 +23,17 @@ export default class MovieDetail extends Component {
         this.handleAddToCart = this.handleAddToCart.bind(this)
         this.handleRemoveFromCart = this.handleRemoveFromCart.bind(this)
         this.calculatePrice = this.calculatePrice.bind(this)
+    }
+    
+    // Do right after component mounts
+    componentDidMount() {
         // Get slug for current movie
         const slug = this.props.match.params.slug
         // Get Movie ID from slug
         const movieId = slug.substr(0, slug.indexOf('-'))
         // Get movie data from movieId
         this.loadMovie(movieId)
+        
     }
     
     // Calculate price based on average vote
@@ -53,8 +58,9 @@ export default class MovieDetail extends Component {
             this.setState({
                 isLoading: false,
                 movie: data,
-                inCart: this.props.cart.some(c => c.movie.id === this.state.movie.id)? true : false,
-                isOwned: this.props.owned.some(m => m.id === this.state.movie.id)? true : false,
+                price: this.calculatePrice(data.vote_average),
+                inCart: this.props.cart.some(c => c.movie.id == id)? true : false,
+                isOwned: this.props.owned.some(m => m.id == id)? true : false,
             })
             // After the movie loads, load the credits (Casts)
             this.loadCredits(id)
@@ -116,7 +122,7 @@ export default class MovieDetail extends Component {
                                         : null
                                     }
                                     <p className={MovieListClasses.year}>{movie.runtime + ' menit'}</p>
-                                    <p className={`${MovieListClasses.price} mt-2`}>Rp{this.calculatePrice(movie.vote_average)}</p>
+                                    <p className={`${MovieListClasses.price} mt-2`}>Rp{this.state.price}</p>
                                     {
                                         // If not owned, show button to add/remove to/from cart
                                         !this.state.isOwned?
