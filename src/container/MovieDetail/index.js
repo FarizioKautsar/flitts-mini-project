@@ -8,6 +8,7 @@ import Loader from '../../component/Loader';
 import Rating from '../../component/Rating';
 import MovieList from '../MovieList';
 import { Helmet } from 'react-helmet'
+import CurrencyFormat from 'react-currency-format';
 
 // Movie detail for a movie
 // Can be accessed from MovieList, Cart, or URL
@@ -187,7 +188,13 @@ export default class MovieDetail extends Component {
                                         this.state.movie.runtime>0 &&
                                         <p className={MovieListClasses.year}>{movie.runtime + ' menit'}</p>
                                     }
-                                    <p className={`${MovieListClasses.price} mt-2`}>Rp{this.state.price}</p>
+                                    <p className={`${MovieListClasses.price} mt-2`}>
+                                        <CurrencyFormat 
+                                            value={this.state.price} 
+                                            displayType={'text'} 
+                                            thousandSeparator={true} 
+                                            prefix={'Rp'}/>
+                                    </p>
                                     {
                                         // If not owned, show button to add/remove to/from cart
                                         !this.state.isOwned?
