@@ -3,6 +3,7 @@ import Button from '../../component/Button';
 import CartItem from '../../component/CartItem'
 import { Link } from 'react-router-dom';
 import classes from './Cart.module.css';
+import { Helmet } from 'react-helmet'
 
 export default class Cart extends Component {
     constructor(props) {
@@ -23,6 +24,9 @@ export default class Cart extends Component {
     render() {
         return (
             <div>
+                <Helmet>
+                    <title>{'Keranjang - StreamFlix'}</title>
+                </Helmet>
                 <h2>Keranjang Anda</h2>
                 <div className='row'>
                     {
@@ -30,8 +34,9 @@ export default class Cart extends Component {
                         this.props.cart.length?
                         <div className='col-md-8'>
                             {
-                                this.props.cart.map((cartItem) => (
+                                this.props.cart.map((cartItem, index) => (
                                     <CartItem 
+                                        key = {index}
                                         movie = {cartItem.movie} 
                                         price = {cartItem.price}
                                         removeFromCart = {this.props.removeFromCart}/>

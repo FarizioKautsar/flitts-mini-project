@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import MovieListItem from '../../component/MovieListItem';
-import Loader from '../../component/Loader';
 
 // Container for MovieListItem
 // Lists movies

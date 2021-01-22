@@ -19,4 +19,5 @@ dari platform ini.
 ## Additional Features
 - Cart feature
 - Checkout from Cart
-- Reset Button (Jual Semua) in "Koleksi" page
+- Saved application data to localStorage
+- Reset Button (Jual Semua Film) in the "Koleksi Saya" page

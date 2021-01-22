@@ -3,6 +3,7 @@ import classes from './MovieListItem.module.css'
 import { Link } from 'react-router-dom';
 import Button from '../../component/Button'
 import Rating from '../../component/Rating'
+import CurrencyFormat from 'react-currency-format';
 
 // List item for movies, shown in MovieList
 export default class MovieListItem extends Component {
@@ -59,7 +60,13 @@ export default class MovieListItem extends Component {
                                 <p className={classes.year}>{movie.release_date.substr(0,4)}</p>
                                 : null
                             }
-                            <p className={classes.price}>Rp{this.props.price}</p>
+                            <p className={classes.price}>
+                                <CurrencyFormat 
+                                    value={this.props.price} 
+                                    displayType={'text'} 
+                                    thousandSeparator={true} 
+                                    prefix={'Rp'}/>
+                            </p>
                             <Rating>
                                 {movie.vote_average}
                             </Rating>

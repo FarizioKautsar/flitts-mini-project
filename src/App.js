@@ -13,6 +13,7 @@ Switch,
 import MovieDetail from './container/MovieDetail';
 import InfiniteScroll from 'react-infinite-scroller';
 import Button from './component/Button';
+import { Helmet } from 'react-helmet'
 
 // Base App for the whole application
 export default class App extends Component {
@@ -33,9 +34,7 @@ export default class App extends Component {
 		this.checkout = this.checkout.bind(this)
 		this.loadMovies = this.loadMovies.bind(this)
 		this.sellAll = this.sellAll.bind(this)
-		this.loadMovies()
 	}
-
 	// Add movie to cart state
 	// Add price to subtotal state 
 	addToCart(movie, price) {
@@ -107,13 +106,12 @@ export default class App extends Component {
 		try {
 		const {data} = await APIConfig.get('/discover/movie',
 		{params: {page: this.state.page}})
-		// Add fetched movie to movies
+		// Add fetched movie to movies state
 		// Next page
 		this.setState({
 			movies: this.state.movies.concat(data.results), 
 			page: this.state.page + 1,
 		})
-		console.log(this.state.page)
 		} catch (error) {
 			alert("Terjadi kesalahan saat memuat film.")
 			console.log(error)
@@ -130,6 +128,9 @@ export default class App extends Component {
 				<Switch> 
 					{/* Home */}
 					<Route exact path='/'>
+						<Helmet>
+							<title>{'Home - StreamFlix'}</title>
+						</Helmet>
 						<h2>Tayang di Indonesia</h2>
 						{
 							this.state.isLoading? <Loader/> :

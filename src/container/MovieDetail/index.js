@@ -7,6 +7,7 @@ import Button from '../../component/Button'
 import Loader from '../../component/Loader';
 import Rating from '../../component/Rating';
 import MovieList from '../MovieList';
+import { Helmet } from 'react-helmet'
 
 // Movie detail for a movie
 // Can be accessed from MovieList, Cart, or URL
@@ -46,7 +47,9 @@ export default class MovieDetail extends Component {
         const slug = newProps.match.params.slug
         // Get Movie ID from slug
         const movieId = slug.substr(0, slug.indexOf('-'))
-        if (!this.state.movie.id == parseInt(movieId)) {
+        if (this.state.movie.id !== parseInt(movieId)) {
+            console.log(this.state.movie.id)
+            console.log(parseInt(movieId))
             this.setState({
                 isLoading: true,
                 isLoadingCast: true,
@@ -161,6 +164,9 @@ export default class MovieDetail extends Component {
         const casts = this.state.casts
         return (
             <div className='row'>
+                <Helmet>
+                    <title>{movie.title + ' - StreamFlix'}</title>
+                </Helmet>
                 {/* Sticky info about movie */}
                 <div className='col-md-3 mb-5'>
                     <div className={classes.poster}>
@@ -227,8 +233,8 @@ export default class MovieDetail extends Component {
                                     <h4>Pemeran</h4>
                                     <div className='row'>
                                         {
-                                            casts.map((cast) => (
-                                                <Cast name={cast.name} profile_path={cast.profile_path}></Cast>
+                                            casts.map((cast, index) => (
+                                                <Cast key={index} name={cast.name} profile_path={cast.profile_path}></Cast>
                                             ))
                                         }
                                     </div>

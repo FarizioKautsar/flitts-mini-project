@@ -3,6 +3,7 @@ import Button from '../Button'
 import { 
     Link, 
 } from 'react-router-dom'; 
+import CurrencyFormat from 'react-currency-format';
 
 // Navbar for the whole app
 // Made using bootstrap https://getbootstrap.com/docs/5.0/components/navbar/
@@ -35,7 +36,14 @@ export default class Navbar extends Component {
                         </ul> */}
                         <ul className="navbar-nav w-100 me-auto">
                             <li className="nav-item d-flex align-items-center ms-auto">
-                                <p className='nav-link'>Saldo Anda <b>Rp{this.props.balance}</b></p>
+                                <p className='nav-link'>Saldo Anda 
+                                    <b> <CurrencyFormat 
+                                        value={this.props.balance} 
+                                        displayType={'text'} 
+                                        thousandSeparator={true} 
+                                        prefix={'Rp'}/>
+                                    </b>
+                                </p>
                             </li>
                             <li className="nav-item d-flex">
                                 <Link to="/keranjang" className="nav-link">
