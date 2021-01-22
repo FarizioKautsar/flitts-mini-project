@@ -129,7 +129,7 @@ export default class App extends Component {
 					{/* Home */}
 					<Route exact path='/'>
 						<Helmet>
-							<title>{'Home - StreamFlix'}</title>
+							<title>{'Home - StreamFlix Farizio'}</title>
 						</Helmet>
 						<h2>Tayang di Indonesia</h2>
 						{
@@ -165,6 +165,9 @@ export default class App extends Component {
 
 					{/* Your Collection */}
 					<Route exact path='/koleksi'>
+						<Helmet>	
+							<title>{'Koleksi Saya - StreamFlix Farizio'}</title>
+						</Helmet>
 						<h2>Koleksi Saya</h2>
 						<Button variant='blue' onClick={this.sellAll}> 
 							Jual Semua

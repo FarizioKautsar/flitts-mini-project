@@ -166,7 +166,7 @@ export default class MovieDetail extends Component {
         return (
             <div className='row'>
                 <Helmet>
-                    <title>{movie.title + ' - StreamFlix'}</title>
+                    <title>{movie.title + ' - StreamFlix Farizio'}</title>
                 </Helmet>
                 {/* Sticky info about movie */}
                 <div className='col-md-3 mb-5'>

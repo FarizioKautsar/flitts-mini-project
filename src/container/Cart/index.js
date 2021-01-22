@@ -25,7 +25,7 @@ export default class Cart extends Component {
         return (
             <div>
                 <Helmet>
-                    <title>{'Keranjang - StreamFlix'}</title>
+                    <title>{'Keranjang - StreamFlix Farizio'}</title>
                 </Helmet>
                 <h2>Keranjang Anda</h2>
                 <div className='row'>
