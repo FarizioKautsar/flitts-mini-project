@@ -23,7 +23,7 @@ export default class Cart extends Component {
     render() {
         return (
             <div>
-                <h2>Your Cart</h2>
+                <h2>Keranjang Anda</h2>
                 <div className='row'>
                     {
                         // If cart is not empty, show CartItems

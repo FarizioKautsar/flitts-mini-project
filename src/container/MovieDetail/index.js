@@ -103,7 +103,7 @@ export default class MovieDetail extends Component {
                     <div className={MovieListClasses.movieDesc}>
                         <p className={MovieListClasses.title}>{movie.title}</p>
                         <p className={MovieListClasses.year}>{movie.release_date}</p>
-                        <p className={MovieListClasses.year}>{movie.runtime + ' minutes'}</p>
+                        <p className={MovieListClasses.year}>{movie.runtime + ' menit'}</p>
                         <p className={MovieListClasses.price}>Rp{this.state.price}</p>
                         {
                             // If not owned, show button to add/remove to/from cart
@@ -131,9 +131,9 @@ export default class MovieDetail extends Component {
                 
                 {/* Movie Detail */}
                 <div className={classes.movieDetail + ' col-9'}>
-                    <h4>Overview</h4>
+                    <h4>Gambaran</h4>
                     <p className={classes.year}>{movie.overview}</p>
-                    <h4>Casts</h4>
+                    <h4>Pemeran</h4>
                     <div className='row'>
                         {
                             casts.map((cast) => (
